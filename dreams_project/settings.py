@@ -144,3 +144,6 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 LOGIN_URL = '/accounts/login/'
+
+print("DEBUG:", DEBUG)
+print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
