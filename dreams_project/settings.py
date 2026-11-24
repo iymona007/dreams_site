@@ -19,15 +19,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+import os
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-dev-key')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = False
 
 ALLOWED_HOSTS = [
+    'dreams-site5.onrender.com',
     'localhost',
     '127.0.0.1',
-    '.onrender.com',
 ]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -144,6 +145,3 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 LOGIN_URL = '/accounts/login/'
-
-print("DEBUG:", DEBUG)
-print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
