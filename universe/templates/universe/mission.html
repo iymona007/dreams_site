@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load universe_tags %}
+{% block title %}Sirli eshik{% endblock %}
+{% block content %}
+<div class="form-box wide door-box">
+    <div class="door {% if done %}open{% endif %}">{% if done %}🌠{% else %}🚪{% endif %}</div>
+    <h2>Bugungi sirli eshik</h2>
+    {% level_badge user %}
+    {% if mission %}
+        <h3 class="door-title">{{ mission.title }}</h3>
+        <p class="door-text">{{ mission.description }}</p>
+        {% if done %}
+            <div class="alert alert-success">Bugungi eshik ochildi. Ertaga yangisi kutadi ✨</div>
+        {% else %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="field">
+                    <label for="answer">Javobingiz <span class="small">(ixtiyoriy)</span></label>
+                    <textarea name="answer" id="answer" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Eshikni ochish (+{{ mission.xp_reward }} XP)</button>
+            </form>
+        {% endif %}
+    {% else %}
+        <p class="empty">Hali missiyalar yo'q. Admin: <code>python manage.py seed_missions</code></p>
+    {% endif %}
+
+    {% if history %}
+        <h3 class="door-title">So'nggi eshiklar</h3>
+        <ul class="door-history">
+            {% for h in history %}
+                <li><span class="date">{{ h.date|date:"d.m.Y" }}</span> · {{ h.mission.title }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+{% endblock %}

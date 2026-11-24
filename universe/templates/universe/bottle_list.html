@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Orzu shishalari{% endblock %}
+{% block content %}
+<div class="form-box wide">
+    <h2>🍾 Orzu shishalari</h2>
+    <p class="hint">Xabarni shishaga soling. Belgilangan sanagacha uni hech kim, hatto siz ham o'qiy olmaysiz.</p>
+    <a href="{% url 'bottle_create' %}" class="btn btn-primary">+ Yangi shisha</a>
+    <div class="bottles">
+        {% for b in bottles %}
+            <a href="{% url 'bottle_detail' b.pk %}" class="bottle {% if b.is_open %}ready{% endif %}">
+                <span class="bottle-ico">{% if b.is_open %}🍾{% else %}🔒{% endif %}</span>
+                <span>
+                    <b>{{ b.open_at|date:"d.m.Y" }}</b>
+                    <small>{% if b.is_open %}{% if b.opened_at %}Ochilgan{% else %}Ochishga tayyor!{% endif %}{% else %}{{ b.days_left }} kun qoldi{% endif %}</small>
+                </span>
+            </a>
+        {% empty %}
+            <p class="empty">Hali shisha yo'q.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

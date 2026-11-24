@@ -1,0 +1,8 @@
+{% if s %}
+<div class="lvl{% if compact %} lvl-compact{% endif %}">
+    <span class="lvl-badge">Lv {{ s.level }}</span>
+    {% if not compact %}<b class="lvl-title">{{ s.title }}</b>{% endif %}
+    <span class="lvl-bar" title="{{ s.progress }} / 100 XP"><i style="width:{{ s.progress }}%"></i></span>
+    <small>{{ s.xp }} XP · 🪙 {{ s.coins }}</small>
+</div>
+{% endif %}

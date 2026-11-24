@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Shisha{% endblock %}
+{% block content %}
+<div class="form-box wide">
+    {% if bottle.is_open %}
+        <h2>🍾 Shisha ochildi</h2>
+        <p class="hint">Yozilgan: {{ bottle.created_at|date:"d.m.Y" }}</p>
+        <p class="detail-text">{{ bottle.text|linebreaksbr }}</p>
+    {% else %}
+        <h2>🔒 Shisha hali yopiq</h2>
+        <p class="detail-text">Bu shisha <b>{{ bottle.open_at|date:"d.m.Y" }}</b> kuni ochiladi. Yana <b>{{ bottle.days_left }}</b> kun sabr qiling ✨</p>
+    {% endif %}
+    <p><a href="{% url 'bottle_list' %}" class="more">← Shishalarim</a></p>
+</div>
+{% endblock %}

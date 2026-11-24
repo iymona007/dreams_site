@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Yangi shisha{% endblock %}
+{% block content %}
+<div class="form-box wide">
+    <h2>🍾 Yangi shisha</h2>
+    <p class="hint">Yozganingiz belgilangan sanagacha yashirin qoladi.</p>
+    <form method="post">
+        {% csrf_token %}
+        <div class="field">
+            <label for="{{ form.text.id_for_label }}">{{ form.text.label }}</label>
+            {{ form.text }}{{ form.text.errors }}
+        </div>
+        <div class="field">
+            <label for="{{ form.open_at.id_for_label }}">{{ form.open_at.label }}</label>
+            {{ form.open_at }}{{ form.open_at.errors }}
+        </div>
+        <button type="submit" class="btn btn-primary">Dengizga tashlash</button>
+        <a href="{% url 'bottle_list' %}" class="btn btn-ghost">Bekor qilish</a>
+    </form>
+</div>
+{% endblock %}
