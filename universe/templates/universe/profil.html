@@ -1,0 +1,31 @@
+
+{% extends 'base.html' %}
+
+{% block title %}{{ profile_user.username }} — Profil{% endblock %}
+
+{% block content %}
+<div class="form-box wide">
+    <h2>{{ profile_user.username }}</h2>
+
+    {% if stats %}
+        <p>Daraja: {{ stats.level }}</p>
+        <p>XP: {{ stats.xp }}</p>
+        <p>Coin: {{ stats.coins }}</p>
+    {% endif %}
+
+    <h3>Orzulari</h3>
+
+    {% for dream in dreams %}
+        <div class="dream-card">
+            <h3>{{ dream.title }}</h3>
+            <p>{{ dream.text }}</p>
+
+            {% for photo in dream.images.all %}
+                <img src="{{ photo.image.url }}" alt="Orzu rasmi" width="200">
+            {% endfor %}
+        </div>
+    {% empty %}
+        <p>Hozircha orzular yo‘q.</p>
+    {% endfor %}
+</div>
+{% endblock %}

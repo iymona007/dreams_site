@@ -8,6 +8,8 @@ from .models import Bottle, MissionCompletion
 from .services import XP_BOTTLE_OPEN, award, get_stats, today_mission
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import get_user_model
+
 
 @login_required
 def mission(request):
@@ -71,4 +73,22 @@ def register(request):
 
     return render(request, 'universe/register.html', {
         'form': form
+    })
+
+@login_required
+def profile(request, username):
+    User = get_user_model()
+    profile_user = get_object_or_404(User, username=username)
+
+    dreams = profile_user.dreams.filter(
+        visibility='public'
+    ) | profile_user.dreams.filter(
+        visibility='private',
+        user=request.user
+    )
+
+    return render(request, 'universe/profile.html', {
+        'profile_user': profile_user,
+        'dreams': dreams,
+        'stats': get_stats(profile_user),
     })
