@@ -1,8 +1,9 @@
-from django.urls import path
 
+from django.urls import path
 from . import views
 
 urlpatterns = [
+    path('', views.mission, name='home'),
     path('mission/', views.mission, name='mission'),
     path('bottles/', views.bottle_list, name='bottle_list'),
     path('bottles/new/', views.bottle_create, name='bottle_create'),
