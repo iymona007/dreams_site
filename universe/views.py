@@ -6,7 +6,8 @@ from django.utils import timezone
 from .forms import BottleForm
 from .models import Bottle, MissionCompletion
 from .services import XP_BOTTLE_OPEN, award, get_stats, today_mission
-
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
 
 @login_required
 def mission(request):
@@ -56,3 +57,18 @@ def bottle_detail(request, pk):
         award(request.user, XP_BOTTLE_OPEN)
         messages.success(request, f'Shisha ochildi! +{XP_BOTTLE_OPEN} XP 🍾')
     return render(request, 'universe/bottle_detail.html', {'bottle': b})
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+
+    return render(request, 'universe/register.html', {
+        'form': form
+    })
