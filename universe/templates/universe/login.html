@@ -1,8 +1,60 @@
 
-<h2>Dreams — Login</h2>
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dreams | Kirish</title>
+    <link rel="stylesheet" href="{% static 'universe/css/auth.css' %}">
+</head>
+<body>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Kirish</button>
-</form>
+<div class="auth-page">
+    <div class="auth-card">
+        <div class="logo">✦ DREAMS</div>
+
+        <div class="auth-icon">🌙</div>
+
+        <h1>Orzular olamiga qayting</h1>
+        <p class="subtitle">Orzularingiz sizni kutmoqda.</p>
+
+        {% if form.errors %}
+            <div class="error">
+                Username yoki parol noto‘g‘ri.
+            </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="field">
+                <label>Foydalanuvchi nomi</label>
+                <input type="text" name="username"
+                       placeholder="Username kiriting"
+                       autocomplete="username" required>
+            </div>
+
+            <div class="field">
+                <label>Parol</label>
+                <input type="password" name="password"
+                       placeholder="Parolingizni kiriting"
+                       autocomplete="current-password" required>
+            </div>
+
+            {% if next %}
+                <input type="hidden" name="next" value="{{ next }}">
+            {% endif %}
+
+            <button type="submit">Kirish →</button>
+        </form>
+
+        <div class="auth-footer">
+            Hisobingiz yo‘qmi?
+            <a href="{% url 'register' %}">Ro‘yxatdan o‘tish</a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
