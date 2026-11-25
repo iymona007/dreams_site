@@ -70,3 +70,49 @@ class Bottle(models.Model):
 
     def __str__(self):
         return f'Shisha #{self.pk} ({self.user})'
+
+
+
+class Dream(models.Model):
+    VISIBILITY_CHOICES = [
+        ('public', 'Barcha uchun ochiq'),
+        ('private', 'Faqat o‘zim uchun'),
+    ]
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='dreams'
+    )
+    title = models.CharField('Orzu sarlavhasi', max_length=200)
+    text = models.TextField('Orzu haqida')
+    visibility = models.CharField(
+        'Ko‘rinish',
+        max_length=10,
+        choices=VISIBILITY_CHOICES,
+        default='public'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return self.title
+
+
+class DreamImage(models.Model):
+    dream = models.ForeignKey(
+        Dream,
+        on_delete=models.CASCADE,
+        related_name='images'
+    )
+    image = models.ImageField(
+        'Orzu rasmi',
+        upload_to='dreams/images/'
+    )
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'{self.dream.title} — rasm #{self.pk}'
